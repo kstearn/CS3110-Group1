@@ -1,4 +1,4 @@
-﻿/*********************************************************
+/*********************************************************
  * BATTLESHIP GRID
  * 
  * CS 3110
@@ -13,6 +13,7 @@ namespace BattleshipGame
     {
         public int size = 10;
         private char[,] grid;
+        private Ship[] ships;
         private bool hasShipsLeft;
 
         public char[] alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".ToCharArray();
@@ -45,10 +46,22 @@ namespace BattleshipGame
             }
         }
 
+
+        //constructor
         public Grid()
         {
             grid = new char[size, size];
             hasShipsLeft = true;
+
+            //initialize ships
+            ships = new Ship[]
+            {
+                new Ship(5, 'A'), //aircraft carrier
+                new Ship(4, 'B'), //battleship
+                new Ship(3, 'C'), //cruiser
+                new Ship(3, 'S'), //submarine
+                new Ship(2, 'D')  //destroyer
+            };
         }
 
 
@@ -73,27 +86,9 @@ namespace BattleshipGame
             //we will create one ship of each size
             //starting with largest size because it is harder to place
             //without overlap
-            for (int shipSize = 5; shipSize >= 2; shipSize--)
+            
+            foreach (Ship ship in ships)
             {
-                //choose letter based on shipSize
-                char letter = '.';
-                switch (shipSize)
-                {
-                    case 2:
-                        letter = 'P';
-                        break;
-                    case 3:
-                        letter = 'S';
-                        break;
-                    case 4:
-                        letter = 'B';
-                        break;
-                    case 5:
-                        letter = 'A';
-                        break;
-                }
-
-
                 //choose random number 1 or 2 for orientation
                 Random random = new Random();
                 int shipOrientation = random.Next(1, 3);
@@ -101,13 +96,13 @@ namespace BattleshipGame
 
                 //choose random number for starting index
                 //the starting index must be <= board size minus ship size
-                int startIndex = random.Next(0, (size - shipSize) + 1);
+                int startIndex = random.Next(0, (size - ship.size) + 1);
 
 
                 //if PossiblePlacement is false, choose a new start index
-                while (!PossiblePlacement(shipSize, startIndex, shipOrientation))
+                while (!PossiblePlacement(ship.size, startIndex, shipOrientation))
                 {
-                    startIndex = random.Next(0, (size - shipSize) + 1);
+                    startIndex = random.Next(0, (size - ship.size) + 1);
                 }
 
 
@@ -115,20 +110,20 @@ namespace BattleshipGame
                 //row will remain the same, iterate through columns
                 if (shipOrientation == 1)
                 {
-                    for (int i = startIndex; i < startIndex + shipSize; i++)
+                    for (int i = startIndex; i < startIndex + ship.size; i++)
                     {
-                        grid[startIndex, i] = letter;
+                        grid[startIndex, i] = ship.letter;
                     }
                 }
 
 
-                //shipOritenation == 2 will be vertical
+                //shipOrientation == 2 will be vertical
                 //column will remain the same, iterate through rows
                 if (shipOrientation == 2)
                 {
-                    for (int j = startIndex; j < startIndex + shipSize; j++)
+                    for (int j = startIndex; j < startIndex + ship.size; j++)
                     {
-                        grid[j, startIndex] = letter;
+                        grid[j, startIndex] = ship.letter;
                     }
                 }
             }
@@ -176,24 +171,11 @@ namespace BattleshipGame
             //numbers for labeling columns
             Console.Write(" "); //space before 1
 
-            if (size > 10)
+            for (int i = 1; i <= size; i++)
             {
-                for (int i = 1; i < 11; i++)
-                {
-                    Console.Write(" | " + i);
-                }
-                for (int i = 11; i <= size; i++)
-                {
-                    Console.Write("| " + i);
-                }
+                Console.Write(" | " + i);
             }
-            else
-            {
-                for (int i = 1; i <= size; i++)
-                {
-                    Console.Write(" | " + i);
-                }
-            }
+        
             
             Console.Write("|"); //right border
             Console.WriteLine();
@@ -212,26 +194,6 @@ namespace BattleshipGame
 
                     switch (grid[i, j])
                     {
-                        case 'S':
-                            Console.Write(" | "); //border between columns
-                            Console.BackgroundColor = ConsoleColor.DarkGreen;
-                            Console.Write("S");
-                            break;
-                        case 'P':
-                            Console.Write(" | ");
-                            Console.BackgroundColor = ConsoleColor.DarkYellow;
-                            Console.Write("P");
-                            break;
-                        case 'A':
-                            Console.Write(" | ");
-                            Console.BackgroundColor = ConsoleColor.DarkMagenta;
-                            Console.Write("A");
-                            break;
-                        case 'B':
-                            Console.Write(" | ");
-                            Console.BackgroundColor = ConsoleColor.DarkBlue;
-                            Console.Write("B");
-                            break;
                         case 'H': //H for hit
                             Console.Write(" | ");
                             Console.ForegroundColor = ConsoleColor.Red;
