@@ -7,7 +7,7 @@
 
 using System;
 
-namespace BattleshipGame
+namespace CS3110_Module8_Group1
 {
     internal class Game
     {
