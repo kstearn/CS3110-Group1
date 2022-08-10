@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BattleshipGame;
-
+//Here is the Class called Enemy Grid to display a second grid
 namespace BattleshipGame
 {
     internal class EnemyGrid
@@ -159,10 +159,12 @@ namespace BattleshipGame
             return false;
         }
 
-
+//I'm trying to change the placement of the second grid but still a work in progress
         public void Draw2()
         {
             //numbers for labeling columns
+            Console.WriteLine("\n");
+            Console.WriteLine("   Enemy Player   ");
             Console.Write(" "); //space before 1
 
             for (int j = 1; j <= 10; j++)
