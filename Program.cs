@@ -14,6 +14,9 @@ namespace CS3110_Module8_Group1
         static void Main(string[] args)
         {
             Game game = new Game();
+            
+            //For integration of AI player.
+            /*EnemyPlayer EnemyAsset = new EnemyPlayer();*/
 
             ConsoleKeyInfo response;
             do
