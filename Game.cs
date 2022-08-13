@@ -4,7 +4,7 @@
  * CS 3110
  * Group 1 - Kari Tyitye, Katelyn Stearn, Joyce Oldham
  ********************************************************/
-
+//I've updated the Game class to include the Enemy Grid to be played
 using System;
 
 namespace CS3110_Module8_Group1
@@ -12,11 +12,13 @@ namespace CS3110_Module8_Group1
     internal class Game
     {
         private Grid grid;
+        enemyGrid = new EnemyGrid();// calling new class for enemy grid
 
         //constructor
         public Game()
         {
             grid = new Grid();
+            private EnemyGrid enemyGrid;
         }
 
         //methods
@@ -24,6 +26,7 @@ namespace CS3110_Module8_Group1
         {
             Console.Clear();
             grid.Reset();
+            enemyGrid.Reset();//once player makes a move, the grid resets. leter it will show what moves the AI made
         }
 
         internal void Play()
@@ -31,6 +34,7 @@ namespace CS3110_Module8_Group1
             while (grid.HasShipsLeft)
             {
                 grid.Draw();
+                enemyGrid.Draw2();//calling the enemy grid method to display
 
                 string guess = "";
                 String letterString, numberString;
@@ -94,6 +98,7 @@ namespace CS3110_Module8_Group1
                         Console.Clear();
 
                         grid.Draw();
+                        enemyGrid.Draw2();
                     }
                     else
                     {
